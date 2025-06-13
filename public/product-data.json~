@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Gold Ultra",
+    "price": 5500,
+    "image": "images (5).jpg"
+  },
+  {
+    "id": 2,
+    "name": "T1000 Ultra",
+    "price": 3500,
+    "image": "images (4).jpg"
+  },
+  {
+    "id": 3,
+    "name": "Meimi M2 Kids",
+    "price": 5000,
+    "image": "images.jpg"
+  },
+  {
+    "id": 4,
+    "name": "T900 Ultra",
+    "price": 3800,
+    "image": "images1.jpg"
+  },
+  {
+    "id": 5,
+    "name": "IRON N1",
+    "price": 7200,
+    "image": "images2.jpg"
+  },
+  {
+    "id": 6,
+    "name": "I8 Pro Max",
+    "price": 2500,
+    "image": "images3.jpg"
+  }
+]

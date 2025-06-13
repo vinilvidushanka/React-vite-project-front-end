@@ -1,0 +1,23 @@
+<<<<<<< HEAD
+section{
+    height: 100vh;
+    background-color: rgb(218,215,203);
+}
+.main-content{
+    padding: 2px;
+    text-align: center;
+=======
+/*section{*/
+/*    height: 100vh;*/
+/*    background-color: rgb(218,215,203);*/
+/*}*/
+.main-content{
+    /*padding: 20px;*/
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+>>>>>>> 3364685 (Initial commit)
+}

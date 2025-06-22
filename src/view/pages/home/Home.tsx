@@ -1,31 +1,18 @@
-import product1 from '../../../assets/products/images (5).jpg'
-import product2 from '../../../assets/products/images (4).jpg'
-import product3 from '../../../assets/products/images.jpg'
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Product} from "../../common/Product/Product.tsx";
-type ProductData={
-    id: number;
-    name: string;
-    price: string;
-    image: string;
-}
-export function Home() {
-    const [products, setProducts] = useState<ProductData[]>([]);
+import {useDispatch, useSelector} from "react-redux";
+import type {AppDispatch, RootState} from "../../../store/store.ts";
+import {getAllProducts} from "../../../slices/productsSlice.ts";
 
-    useEffect(()=>{
-        const fetchData=async ()=>{
-            try {
-                const response=await fetch('./product-data.json')
-                const jsonData=await response.json();
-                // console.log(jsonData);
-                setProducts(jsonData);
-                // console.log(products)
-            }catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-        fetchData()
-    },[])
+export function Home() {
+
+    const dispatch = useDispatch<AppDispatch>();
+    const {list} = useSelector((state: RootState) => state.products);
+
+
+    useEffect(() => {
+        dispatch(getAllProducts())
+    }, [])
 
     return (
         <div>
@@ -45,7 +32,7 @@ export function Home() {
                 </div>*/}
 
                 {
-                    products.map((product)=>(
+                    list.map((product) => (
                         <Product key={product.id} data={product}/>
                     ))
                 }

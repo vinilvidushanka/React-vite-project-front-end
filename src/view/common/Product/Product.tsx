@@ -1,17 +1,10 @@
-import product1 from "../../../assets/products/images (5).jpg";
-import product2 from "../../../assets/products/images (4).jpg";
-import product3 from "../../../assets/products/images.jpg";
-import product4 from "../../../assets/products/images1.jpg";
 import {ModifyCart} from "../ModifyCart/ModifyCart.tsx";
-import {useState} from "react";
+import  {useState} from "react";
+import type {ProductData} from "../../../model/ProductData.ts";
+import {useDispatch} from "react-redux";
+import type {AppDispatch} from "../../../store/store.ts";
+import {addItemToCart} from "../../../slices/cartSlice.ts";
 
-type ProductData={
-    id: number;
-    name: string;
-    price: number;
-    currency: string,
-    image: string;
-}
 type ProductProps={
     data:ProductData
 }
@@ -22,7 +15,11 @@ const images:Record<string, string>=import.meta.glob('../../../assets/products/*
 
 export function Product({data}:ProductProps) {
     const [isActive, setIsActive] = useState(false);
-    function addToCart() {
+
+    const dispatch = useDispatch<AppDispatch>();
+
+    const addToCart=() =>{
+        dispatch(addItemToCart(data))
         setIsActive(true);
     }
 
@@ -37,9 +34,8 @@ export function Product({data}:ProductProps) {
 
                     {
                         isActive ? (
-                            <ModifyCart data={{product:data}}>
+                            <ModifyCart data={{product:data}}/>
 
-                            </ModifyCart>
                         ):(
                             <button className="bg-white font-bold text-blue-500 text-xs px-3 py-1 rounded-full hover:bg-blue-950 hover:text-white transition cursor-pointer" onClick={addToCart}>
                                 Add to Cart
@@ -54,3 +50,4 @@ export function Product({data}:ProductProps) {
         </div>
     );
 }
+

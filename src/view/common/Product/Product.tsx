@@ -1,8 +1,7 @@
 import {ModifyCart} from "../ModifyCart/ModifyCart.tsx";
-import  {useState} from "react";
 import type {ProductData} from "../../../model/ProductData.ts";
-import {useDispatch} from "react-redux";
-import type {AppDispatch} from "../../../store/store.ts";
+import {useDispatch, useSelector} from "react-redux";
+import type {AppDispatch, RootState} from "../../../store/store.ts";
 import {addItemToCart} from "../../../slices/cartSlice.ts";
 
 type ProductProps={
@@ -14,13 +13,14 @@ const images:Record<string, string>=import.meta.glob('../../../assets/products/*
 
 
 export function Product({data}:ProductProps) {
-    const [isActive, setIsActive] = useState(false);
+    // const [isActive, setIsActive] = useState(false);
 
     const dispatch = useDispatch<AppDispatch>();
 
+    const item = useSelector((state:RootState)=> state.cart.items.find(cartItem=>cartItem.product.id === data.id));
     const addToCart=() =>{
         dispatch(addItemToCart(data))
-        setIsActive(true);
+        // setIsActive(true);
     }
 
     let image=images [`../../../assets/products/${data.image}`]
@@ -33,7 +33,7 @@ export function Product({data}:ProductProps) {
                     <p className="text-xs text-black mb-2">{data.price}<small className="text-xs text-black mb-2 pl-1">{data.currency}</small></p>
 
                     {
-                        isActive ? (
+                        item ? (
                             <ModifyCart data={{product:data}}/>
 
                         ):(

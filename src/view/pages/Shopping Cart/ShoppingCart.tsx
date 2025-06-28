@@ -129,9 +129,10 @@ export function ShoppingCart({ itemsList }: ShoppingCartProps) {
 }
 */
 
-import { useState } from "react";
-import type { CartItem } from "../../../model/CartItem.ts";
+import {useSelector} from "react-redux";
+import type {RootState} from "../../../store/store.ts";
 
+/*
 type CartItemType = {
     product: {
         id: number;
@@ -142,22 +143,23 @@ type CartItemType = {
     };
     itemCount: number;
 };
+*/
 
-interface ShoppingCartProps {
+/*interface ShoppingCartProps {
     itemsList: CartItemType[];
-}
+}*/
 
 const images: Record<string, string> = import.meta.glob(
     "../../../assets/products/*",
     { eager: true, import: "default" }
 );
 
-export function ShoppingCart({ itemsList }: ShoppingCartProps) {
-    const [cartItems, setCartItems] = useState<CartItemType[]>(itemsList);
+export function ShoppingCart() {
+    // const [cartItems, setCartItems] = useState<CartItemType[]>(itemsList);
 
-    function onRemove(productId: number) {
-        setCartItems(prevItems => prevItems.filter(item => item.product.id !== productId));
-    }
+
+
+    const {items}= useSelector((state:RootState)=> state.cart)
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 to-blue-100 p-6">
@@ -175,18 +177,17 @@ export function ShoppingCart({ itemsList }: ShoppingCartProps) {
                             <th className="px-4 py-3 font-semibold">Unit Price</th>
                             <th className="px-4 py-3 font-semibold">Quantity</th>
                             <th className="px-4 py-3 font-semibold">Total Price</th>
-                            <th className="px-4 py-3 font-semibold">Remove</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {cartItems.length === 0 ? (
+                        {items.length === 0 ? (
                             <tr>
                                 <td colSpan={7} className="text-center px-6 py-4 text-blue-800 bg-blue-100">
                                     No Items to display
                                 </td>
                             </tr>
                         ) : (
-                            cartItems.map((item, index) => (
+                            items.map((item, index) => (
                                 <tr
                                     key={item.product.id}
                                     className={`${
@@ -210,14 +211,6 @@ export function ShoppingCart({ itemsList }: ShoppingCartProps) {
                                     <td className="px-4 py-3 border-t border-blue-200">{item.itemCount}</td>
                                     <td className="px-4 py-3 border-t border-blue-200 font-medium text-blue-900">
                                         {(item.product.price * item.itemCount).toFixed(2)} {item.product.currency}
-                                    </td>
-                                    <td className="px-4 py-3 border-t border-blue-200 text-center">
-                                        <button
-                                            onClick={() => onRemove(item.product.id)}
-                                            className="bg-red-600 text-white text-xs px-3 py-1 rounded hover:bg-red-700 transition cursor-pointer"
-                                        >
-                                            Remove
-                                        </button>
                                     </td>
                                 </tr>
                             ))
